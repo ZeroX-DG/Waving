@@ -1,4 +1,5 @@
 import './icons/style.css';
+import Canvas, { ICanvas } from './init/canvas';
 import ProgressBar, { IProgressBar } from './init/progressBar';
 import StartStopButton, { IStartStopButton } from './init/startStopButton';
 import './styles/container.sass';
@@ -14,7 +15,7 @@ interface IWavingOption {
 class Waving {
   private root: HTMLElement;
   private option: IWavingOption;
-  private canvas: HTMLCanvasElement;
+  private canvas: ICanvas;
   private progressBar: IProgressBar;
   private startStopButton: IStartStopButton;
   private volume: number;
@@ -34,6 +35,8 @@ class Waving {
     this.audio = document.createElement('audio');
     this.audio.src = src;
     this.progressBar.setAudio(this.audio);
+    this.canvas.setAudio(this.audio);
+    this.canvas.visualize();
     this.audio.onended = () => {
       this.startStopButton.stop();
     };
@@ -48,11 +51,9 @@ class Waving {
 
     this.root.classList.add('waving-container');
 
-    this.canvas = document.createElement('canvas');
-    this.canvas.className = 'waving-canvas';
+    this.canvas = new Canvas();
 
     this.progressBar = new ProgressBar();
-    this.root.appendChild(this.progressBar.render());
 
     this.startStopButton = new StartStopButton();
     this.startStopButton.onStart(() => {
@@ -61,7 +62,14 @@ class Waving {
     this.startStopButton.onStop(() => {
       this.audio.pause();
     });
-    this.root.appendChild(this.startStopButton.render());
+
+    const controlContainer = document.createElement('div');
+    controlContainer.className = 'control-container';
+
+    controlContainer.appendChild(this.progressBar.render());
+    controlContainer.appendChild(this.startStopButton.render());
+    this.root.appendChild(this.canvas.render());
+    this.root.appendChild(controlContainer);
   }
 }
 
