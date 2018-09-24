@@ -5,7 +5,6 @@ export interface IVisualCanvasColor {
 
 export interface IWavingOption {
   color?: string;
-  width?: string;
   volume?: number;
   visualCanvasColor?: IVisualCanvasColor[];
   autoStart?: boolean;
