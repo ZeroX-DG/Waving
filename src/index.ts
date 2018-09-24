@@ -22,7 +22,8 @@ class Waving {
   }
 
   public setAudio(src: string) {
-    this.audio = document.createElement('audio');
+    this.audio = this.audio || document.createElement('audio');
+    this.startStopButton.stop();
     this.audio.src = src;
     this.audio.onloadeddata = () => {
       this.progressBar.setAudio(this.audio);
@@ -32,6 +33,9 @@ class Waving {
       this.audio.onended = () => {
         this.startStopButton.stop();
       };
+      if (this.option.autoStart) {
+        this.startStopButton.start();
+      }
     };
   }
 
