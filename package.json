@@ -1,0 +1,30 @@
+{
+  "name": "waving",
+  "version": "1.0.0",
+  "description": "A simple audio player with wave",
+  "main": "dist/index.js",
+  "scripts": {
+    "lint": "tslint -c tslint.json 'src/**/*.ts'",
+    "dev": "rollup -c -w",
+    "build": "rollup -c",
+    "pretty": "prettier --parser typescript --write 'src/**/*.ts'"
+  },
+  "keywords": [
+    "audio",
+    "wave",
+    "player"
+  ],
+  "author": "Hung Nguyen <viethungax@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "node-sass": "^4.9.3",
+    "prettier": "^1.14.3",
+    "rollup": "^0.66.2",
+    "rollup-plugin-copy-assets": "^1.0.0",
+    "rollup-plugin-postcss": "^1.6.2",
+    "rollup-plugin-typescript": "^1.0.0",
+    "tslib": "^1.9.3",
+    "tslint": "^5.11.0",
+    "typescript": "^3.0.3"
+  }
+}

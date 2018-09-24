@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+  <title>Waving example</title>
+  <link rel='stylesheet' href='../dist/waving.css'>
+  <style>
+    html,
+    body {
+      padding: 0;
+      margin: 0;
+    }
+
+    #player {
+      width: 600px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id='player'></div>
+</body>
+
+<script src='../dist/waving.js'></script>
+<script>
+  const player = new waving(document.getElementById('player'));
+  player.setAudio('https://www.sample-videos.com/audio/mp3/crowd-cheering.mp3')
+</script>
+
+</html>
