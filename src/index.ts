@@ -6,7 +6,13 @@ import StartStopButton, { IStartStopButton } from './init/startStopButton';
 import VolumeBar, { IVolumeBar } from './init/volumeBar';
 import './styles/container.sass';
 
-class Waving {
+interface IWaving {
+  setAudio(audio: string);
+  start();
+  stop();
+}
+
+class Waving implements IWaving {
   private root: HTMLElement;
   private option: IWavingOption;
   private canvas: ICanvas;
@@ -37,6 +43,14 @@ class Waving {
         this.startStopButton.start();
       }
     };
+  }
+
+  public start() {
+    this.startStopButton.start();
+  }
+
+  public stop() {
+    this.startStopButton.stop();
   }
 
   private init(option: IWavingOption) {
