@@ -32,12 +32,14 @@ class Waving {
   public setAudio(src: string) {
     this.audio = document.createElement('audio');
     this.audio.src = src;
-    this.progressBar.setAudio(this.audio);
-    this.canvas.setAudio(this.audio);
-    this.volumeBar.setAudio(this.audio);
-    this.canvas.visualize();
-    this.audio.onended = () => {
-      this.startStopButton.stop();
+    this.audio.onloadeddata = () => {
+      this.progressBar.setAudio(this.audio);
+      this.canvas.setAudio(this.audio);
+      this.volumeBar.setAudio(this.audio);
+      this.canvas.visualize();
+      this.audio.onended = () => {
+        this.startStopButton.stop();
+      };
     };
   }
 

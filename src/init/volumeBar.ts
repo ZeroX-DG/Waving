@@ -34,10 +34,8 @@ export default class VolumeBar implements IVolumeBar {
 
   public setAudio(audio: HTMLAudioElement) {
     this.audio = audio;
-    this.audio.onloadeddata = () => {
-      this.audio.volume = Math.floor(this.percentage) / 100;
-      this.update();
-    };
+    this.audio.volume = Math.floor(this.percentage) / 100;
+    this.update();
   }
 
   private initMouseEvent() {

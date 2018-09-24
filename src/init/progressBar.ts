@@ -32,13 +32,11 @@ export default class ProgressBar implements IProgressBar {
 
   public setAudio(audio: HTMLAudioElement) {
     this.audio = audio;
-    this.audio.onloadeddata = () => {
-      this.duration = this.audio.duration;
-      this.percentage = 0;
-      this.currentDuration = 0;
-      this.update();
-      this.trackProgress();
-    };
+    this.duration = this.audio.duration;
+    this.percentage = 0;
+    this.currentDuration = 0;
+    this.update();
+    this.trackProgress();
   }
 
   private initMouseEvent() {
