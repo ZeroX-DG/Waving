@@ -10,3 +10,9 @@ export interface IWavingOption {
   visualCanvasColor?: IVisualCanvasColor[];
   autoStart?: boolean;
 }
+
+export interface IWavingEvents {
+  onStart?: () => void;
+  onEnded?: () => void;
+  onPaused?: () => void;
+}

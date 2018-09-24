@@ -1,4 +1,4 @@
-import { IWavingOption } from './common';
+import { IWavingOption, IWavingEvents } from './common';
 import './icons/style.css';
 import Canvas, { ICanvas } from './init/canvas';
 import ProgressBar, { IProgressBar } from './init/progressBar';
@@ -20,10 +20,16 @@ class Waving implements IWaving {
   private startStopButton: IStartStopButton;
   private volumeBar: IVolumeBar;
   private audio: HTMLAudioElement;
+  private listeners: IWavingEvents;
 
-  constructor(element: HTMLElement, option?: IWavingOption) {
+  constructor(
+    element: HTMLElement,
+    option?: IWavingOption,
+    events?: IWavingEvents
+  ) {
     this.root = element;
     this.option = option || {};
+    this.listeners = events || {};
     this.init(this.option);
   }
 
@@ -38,6 +44,9 @@ class Waving implements IWaving {
       this.canvas.visualize();
       this.audio.onended = () => {
         this.startStopButton.stop();
+        if (this.listeners.onEnded) {
+          this.listeners.onEnded();
+        }
       };
       if (this.option.autoStart) {
         this.startStopButton.start();
@@ -68,9 +77,15 @@ class Waving implements IWaving {
     this.startStopButton = new StartStopButton(option);
     this.startStopButton.onStart(() => {
       this.audio.play();
+      if (this.listeners.onStart) {
+        this.listeners.onStart();
+      }
     });
     this.startStopButton.onStop(() => {
       this.audio.pause();
+      if (this.listeners.onPaused) {
+        this.listeners.onPaused();
+      }
     });
 
     const controlContainer = document.createElement('div');
