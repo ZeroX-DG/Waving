@@ -37,6 +37,9 @@ class Waving {
 
   private init(option: IWavingOption) {
     this.root.classList.add('waving-container');
+    if (option.width) {
+      this.root.style.width = option.width;
+    }
 
     this.volumeBar = new VolumeBar(option);
 
