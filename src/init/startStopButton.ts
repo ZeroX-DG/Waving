@@ -1,6 +1,7 @@
 import startStopButtonStructure from '../structures/startStopButton';
 import '../styles/startStopButton.sass';
 import { stringToNode } from '../util';
+import { IWavingOption } from '../common';
 
 export interface IStartStopButton {
   render(): HTMLElement;
@@ -14,12 +15,18 @@ export default class StartStopButton implements IStartStopButton {
   private button: HTMLElement;
   private icon: HTMLElement;
   private isPlaying: boolean;
+  private color: string;
   private startCallback: () => void;
   private stopCallback: () => void;
+
+  constructor(option: IWavingOption) {
+    this.color = option.color;
+  }
 
   public render(): HTMLElement {
     this.button = stringToNode(startStopButtonStructure);
     this.icon = this.button.querySelector('.icon');
+    this.initInterface();
     this.button.addEventListener('click', () => {
       if (this.isPlaying) {
         this.stop();
@@ -48,5 +55,11 @@ export default class StartStopButton implements IStartStopButton {
 
   public onStop(callback: () => void) {
     this.stopCallback = callback;
+  }
+
+  private initInterface() {
+    if (this.color) {
+      this.button.style.background = this.color;
+    }
   }
 }

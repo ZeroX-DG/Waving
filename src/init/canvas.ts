@@ -1,6 +1,7 @@
 import canvasStructure from '../structures/canvas';
 import '../styles/canvas.sass';
 import { map, stringToNode } from '../util';
+import { IWavingOption, IVisualCanvasColor } from '../common';
 
 export interface ICanvas {
   render(): HTMLElement;
@@ -14,9 +15,11 @@ export default class Canvas implements ICanvas {
   private audioContext: AudioContext;
   private source: MediaElementAudioSourceNode;
   private analyser: AnalyserNode;
+  private visualCanvasColor: IVisualCanvasColor[];
 
-  constructor() {
+  constructor(option: IWavingOption) {
     this.mediaElements = new WeakMap();
+    this.visualCanvasColor = option.visualCanvasColor;
   }
 
   public render(): HTMLElement {
@@ -52,9 +55,15 @@ export default class Canvas implements ICanvas {
       // clear this.canvass for re-draw
       ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
       const gradient = ctx.createLinearGradient(0, 0, 0, this.canvas.height);
-      gradient.addColorStop(0, '#EA2027');
-      gradient.addColorStop(0.8, '#ff8c8c');
-      gradient.addColorStop(1, '#ffefef');
+      if (this.visualCanvasColor) {
+        for (const color of this.visualCanvasColor) {
+          gradient.addColorStop(color.stop, color.color);
+        }
+      } else {
+        gradient.addColorStop(0, '#EA2027');
+        gradient.addColorStop(0.8, '#ff8c8c');
+        gradient.addColorStop(1, '#ffefef');
+      }
       ctx.fillStyle = gradient;
       const bars = this.canvas.width / 2;
       for (let i = 0; i < bars; i++) {

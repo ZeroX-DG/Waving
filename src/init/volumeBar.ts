@@ -1,3 +1,4 @@
+import { IWavingOption } from '../common';
 import volumeBarStructure from '../structures/volumeBar';
 import '../styles/volume-bar.sass';
 import { stringToNode } from '../util';
@@ -14,9 +15,11 @@ export default class VolumeBar implements IVolumeBar {
   private volumeLineSelected: HTMLElement;
   private percentage: number;
   private audio: HTMLAudioElement;
+  private color: string;
 
-  constructor(volume: number) {
-    this.percentage = volume || 50;
+  constructor(option: IWavingOption) {
+    this.percentage = option.volume >= 0 ? option.volume : 50;
+    this.color = option.color;
   }
 
   public render(): HTMLElement {
@@ -27,6 +30,8 @@ export default class VolumeBar implements IVolumeBar {
       '.volume-line--selected'
     );
 
+    this.initInterface();
+
     this.initMouseEvent();
 
     return this.volumeBar;
@@ -36,6 +41,13 @@ export default class VolumeBar implements IVolumeBar {
     this.audio = audio;
     this.audio.volume = Math.floor(this.percentage) / 100;
     this.update();
+  }
+
+  private initInterface() {
+    if (this.color) {
+      this.volumeLineSelected.style.background = this.color;
+      this.thumb.style.background = this.color;
+    }
   }
 
   private initMouseEvent() {

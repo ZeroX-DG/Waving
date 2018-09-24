@@ -1,16 +1,10 @@
+import { IWavingOption } from './common';
 import './icons/style.css';
 import Canvas, { ICanvas } from './init/canvas';
 import ProgressBar, { IProgressBar } from './init/progressBar';
 import StartStopButton, { IStartStopButton } from './init/startStopButton';
 import VolumeBar, { IVolumeBar } from './init/volumeBar';
 import './styles/container.sass';
-
-interface IWavingOption {
-  background?: string;
-  width?: string;
-  progress?: number;
-  volume?: number;
-}
 
 class Waving {
   private root: HTMLElement;
@@ -19,8 +13,6 @@ class Waving {
   private progressBar: IProgressBar;
   private startStopButton: IStartStopButton;
   private volumeBar: IVolumeBar;
-  private background: string;
-  private width: string;
   private audio: HTMLAudioElement;
 
   constructor(element: HTMLElement, option?: IWavingOption) {
@@ -44,18 +36,15 @@ class Waving {
   }
 
   private init(option: IWavingOption) {
-    this.background = option.background || 'transparent';
-    this.width = option.width || '100%';
-
     this.root.classList.add('waving-container');
 
-    this.volumeBar = new VolumeBar(option.volume);
+    this.volumeBar = new VolumeBar(option);
 
-    this.canvas = new Canvas();
+    this.canvas = new Canvas(option);
 
-    this.progressBar = new ProgressBar();
+    this.progressBar = new ProgressBar(option);
 
-    this.startStopButton = new StartStopButton();
+    this.startStopButton = new StartStopButton(option);
     this.startStopButton.onStart(() => {
       this.audio.play();
     });

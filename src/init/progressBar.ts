@@ -1,3 +1,4 @@
+import { IWavingOption } from '../common';
 import progressBarStructure from '../structures/progressBar';
 import '../styles/progress-bar.sass';
 import { stringToNode } from '../util';
@@ -16,6 +17,11 @@ export default class ProgressBar implements IProgressBar {
   private percentage: number;
   private currentDuration: number;
   private audio: HTMLAudioElement;
+  private color: string;
+
+  constructor(option: IWavingOption) {
+    this.color = option.color;
+  }
 
   public render(): HTMLElement {
     this.progressBar = stringToNode(progressBarStructure);
@@ -25,6 +31,7 @@ export default class ProgressBar implements IProgressBar {
       '.progress-line--played'
     );
 
+    this.initInterface();
     this.initMouseEvent();
 
     return this.progressBar;
@@ -37,6 +44,13 @@ export default class ProgressBar implements IProgressBar {
     this.currentDuration = 0;
     this.update();
     this.trackProgress();
+  }
+
+  private initInterface() {
+    if (this.color) {
+      this.progressPlayedLine.style.background = this.color;
+      this.thumb.style.background = this.color;
+    }
   }
 
   private initMouseEvent() {
