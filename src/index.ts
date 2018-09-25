@@ -10,6 +10,7 @@ interface IWaving {
   setAudio(audio: string);
   start();
   stop();
+  setVolume(volume: number);
 }
 
 class Waving implements IWaving {
@@ -75,6 +76,13 @@ class Waving implements IWaving {
     if (this.listeners.onPaused) {
       this.listeners.onPaused();
     }
+  }
+
+  public setVolume(volume: number) {
+    if (volume > 100) {
+      throw new Error('The volume must be from 0 - 100');
+    }
+    this.audio.volume = Math.floor(volume) / 100;
   }
 
   private init(option: IWavingOption) {

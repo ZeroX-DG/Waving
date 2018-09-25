@@ -41,6 +41,19 @@ export default class VolumeBar implements IVolumeBar {
     this.audio = audio;
     this.audio.volume = Math.floor(this.percentage) / 100;
     this.update();
+    this.trackVolume();
+  }
+
+  private trackVolume() {
+    let isFirstTime = true;
+    this.audio.onvolumechange = () => {
+      if (isFirstTime) {
+        isFirstTime = false;
+        return;
+      }
+      this.percentage = this.audio.volume * 100;
+      this.update();
+    };
   }
 
   private initInterface() {
