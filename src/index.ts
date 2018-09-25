@@ -30,69 +30,84 @@ class Waving implements IWaving {
     this.root = element;
     this.option = option || {};
     this.listeners = events || {};
+
+    // default to show controls
+    if (this.option.controls === undefined) {
+      this.option.controls = true;
+    }
     this.init(this.option);
   }
 
   public setAudio(src: string) {
     this.audio = this.audio || document.createElement('audio');
-    this.startStopButton.stop();
+    this.stop();
     this.audio.src = src;
     this.audio.onloadeddata = () => {
-      this.progressBar.setAudio(this.audio);
+      if (this.option.controls) {
+        this.progressBar.setAudio(this.audio);
+        this.volumeBar.setAudio(this.audio);
+      }
       this.canvas.setAudio(this.audio);
-      this.volumeBar.setAudio(this.audio);
       this.canvas.visualize();
       this.audio.onended = () => {
-        this.startStopButton.stop();
+        if (this.option.controls) {
+          this.startStopButton.stop();
+        }
         if (this.listeners.onEnded) {
           this.listeners.onEnded();
         }
       };
       if (this.option.autoStart) {
-        this.startStopButton.start();
+        this.start();
       }
     };
   }
 
   public start() {
-    this.startStopButton.start();
+    this.audio.play();
+    if (this.listeners.onStart) {
+      this.listeners.onStart();
+    }
   }
 
   public stop() {
-    this.startStopButton.stop();
+    this.audio.pause();
+    if (this.listeners.onPaused) {
+      this.listeners.onPaused();
+    }
   }
 
   private init(option: IWavingOption) {
     this.root.classList.add('waving-container');
-
-    this.volumeBar = new VolumeBar(option);
+    if (!this.option.controls) {
+      this.root.classList.add('no-controls');
+    }
 
     this.canvas = new Canvas(option);
 
-    this.progressBar = new ProgressBar(option);
+    if (option.controls) {
+      this.volumeBar = new VolumeBar(option);
+      this.progressBar = new ProgressBar(option);
 
-    this.startStopButton = new StartStopButton(option);
-    this.startStopButton.onStart(() => {
-      this.audio.play();
-      if (this.listeners.onStart) {
-        this.listeners.onStart();
-      }
-    });
-    this.startStopButton.onStop(() => {
-      this.audio.pause();
-      if (this.listeners.onPaused) {
-        this.listeners.onPaused();
-      }
-    });
+      this.startStopButton = new StartStopButton(option);
+      this.startStopButton.onStart(() => {
+        this.start();
+      });
+      this.startStopButton.onStop(() => {
+        this.stop();
+      });
+    }
 
-    const controlContainer = document.createElement('div');
-    controlContainer.className = 'control-container';
-
-    controlContainer.appendChild(this.progressBar.render());
-    controlContainer.appendChild(this.startStopButton.render());
-    controlContainer.appendChild(this.volumeBar.render());
     this.root.appendChild(this.canvas.render());
-    this.root.appendChild(controlContainer);
+    if (option.controls) {
+      const controlContainer = document.createElement('div');
+      controlContainer.className = 'control-container';
+
+      controlContainer.appendChild(this.progressBar.render());
+      controlContainer.appendChild(this.startStopButton.render());
+      controlContainer.appendChild(this.volumeBar.render());
+      this.root.appendChild(controlContainer);
+    }
   }
 }
 

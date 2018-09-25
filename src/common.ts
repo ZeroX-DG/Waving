@@ -8,6 +8,7 @@ export interface IWavingOption {
   volume?: number;
   visualCanvasColor?: IVisualCanvasColor[];
   autoStart?: boolean;
+  controls?: boolean;
 }
 
 export interface IWavingEvents {
