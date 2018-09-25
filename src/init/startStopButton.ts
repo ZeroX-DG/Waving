@@ -5,6 +5,7 @@ import { IWavingOption } from '../common';
 
 export interface IStartStopButton {
   render(): HTMLElement;
+  setAudio(audio: HTMLAudioElement);
   onStart(callback: () => void);
   onStop(callback: () => void);
   start();
@@ -16,6 +17,7 @@ export default class StartStopButton implements IStartStopButton {
   private icon: HTMLElement;
   private isPlaying: boolean;
   private color: string;
+  private audio: HTMLAudioElement;
   private startCallback: () => void;
   private stopCallback: () => void;
 
@@ -35,6 +37,30 @@ export default class StartStopButton implements IStartStopButton {
       }
     });
     return this.button;
+  }
+
+  public setAudio(audio: HTMLAudioElement) {
+    this.audio = audio;
+    this.trackState();
+  }
+
+  public trackState() {
+    let isFirstTime = true;
+    this.audio.onpause = () => {
+      if (isFirstTime) {
+        isFirstTime = false;
+        return;
+      }
+      this.stop();
+    };
+
+    this.audio.onplay = () => {
+      if (isFirstTime) {
+        isFirstTime = false;
+        return;
+      }
+      this.start();
+    };
   }
 
   public stop() {

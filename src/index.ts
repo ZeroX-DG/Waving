@@ -50,6 +50,7 @@ class Waving implements IWaving {
         this.volumeBar.setAudio(this.audio);
       }
       this.canvas.setAudio(this.audio);
+      this.startStopButton.setAudio(this.audio);
       this.canvas.visualize();
       this.audio.onended = () => {
         if (this.option.controls) {
