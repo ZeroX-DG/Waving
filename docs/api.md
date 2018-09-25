@@ -25,7 +25,7 @@ Waving is a waveform audio visualizer written in typescript. Waving is built on 
 Waving's main class. An instance of this class provides methods for controling the player.
 
 ```js
-const player = new waving(element, options, events);
+const player = new Waving(element, options, events);
 
 player.setAudio('audio.mp3');
 player.start();
