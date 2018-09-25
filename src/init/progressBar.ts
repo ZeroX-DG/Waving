@@ -20,7 +20,7 @@ export default class ProgressBar implements IProgressBar {
   private color: string;
 
   constructor(option: IWavingOption) {
-    this.color = option.color;
+    this.color = option.controlsColor;
   }
 
   public render(): HTMLElement {

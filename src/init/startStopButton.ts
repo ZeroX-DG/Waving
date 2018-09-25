@@ -20,7 +20,7 @@ export default class StartStopButton implements IStartStopButton {
   private stopCallback: () => void;
 
   constructor(option: IWavingOption) {
-    this.color = option.color;
+    this.color = option.controlsColor;
   }
 
   public render(): HTMLElement {

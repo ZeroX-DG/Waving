@@ -19,7 +19,7 @@ export default class VolumeBar implements IVolumeBar {
 
   constructor(option: IWavingOption) {
     this.percentage = option.volume >= 0 ? option.volume : 50;
-    this.color = option.color;
+    this.color = option.controlsColor;
   }
 
   public render(): HTMLElement {
