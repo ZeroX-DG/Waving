@@ -5,7 +5,7 @@ import copy from 'rollup-plugin-copy-assets';
 export default {
   input: './src/index.ts',
   output: {
-    name: 'waving',
+    name: 'Waving',
     file: 'dist/waving.js',
     format: 'umd'
   },
