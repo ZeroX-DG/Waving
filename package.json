@@ -19,6 +19,7 @@
   "author": "Hung Nguyen <viethungax@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "@types/jest": "^23.3.2",
     "http-server": "^0.11.1",
     "jest": "^23.6.0",
     "node-sass": "^4.9.3",
