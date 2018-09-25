@@ -6,9 +6,10 @@
   "scripts": {
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
     "dev": "rollup -c -w",
-    "build": "rollup -c",
+    "build": "rollup -c --environment BUILD:production",
     "pretty": "prettier --parser typescript --write 'src/**/*.ts'",
-    "example": "http-server ."
+    "example": "http-server .",
+    "test": "npm run build && jest"
   },
   "keywords": [
     "audio",
@@ -19,12 +20,15 @@
   "license": "MIT",
   "devDependencies": {
     "http-server": "^0.11.1",
+    "jest": "^23.6.0",
     "node-sass": "^4.9.3",
     "prettier": "^1.14.3",
     "rollup": "^0.66.2",
     "rollup-plugin-copy-assets": "^1.0.0",
     "rollup-plugin-postcss": "^1.6.2",
     "rollup-plugin-typescript": "^1.0.0",
+    "rollup-plugin-uglify": "^6.0.0",
+    "ts-jest": "^23.10.1",
     "tslib": "^1.9.3",
     "tslint": "^5.11.0",
     "typescript": "^3.0.3"
