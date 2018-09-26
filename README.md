@@ -3,7 +3,7 @@
 _A simple audio player with wave effect_
 
 <p align="center">
-  <img src="./assets/demo.gif" />
+  <img src="https://github.com/ZeroX-DG/Waving/raw/master/assets/demo.gif" />
 </p>
 
 ## Quick start
