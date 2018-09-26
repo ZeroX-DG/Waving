@@ -15,16 +15,15 @@ interface IWaving {
   mute();
 }
 
-let canvas: ICanvas;
-let progressBar: IProgressBar;
-let startStopButton: IStartStopButton;
-let volumeBar: IVolumeBar;
-let audio: HTMLAudioElement;
-
-class Waving implements IWaving {
+class WavingCore {
   private root: HTMLElement;
   private option: IWavingOption;
   private listeners: IWavingEvents;
+  private canvas: ICanvas;
+  private progressBar: IProgressBar;
+  private startStopButton: IStartStopButton;
+  private volumeBar: IVolumeBar;
+  private audio: HTMLAudioElement;
 
   constructor(
     element: HTMLElement,
@@ -56,22 +55,21 @@ class Waving implements IWaving {
       );
     }
 
-    audio = audio || document.createElement('audio');
-    this.stop();
-    audio.src = src;
-    audio.onloadeddata = () => {
+    this.audio = this.audio || document.createElement('audio');
+    this.audio.src = src;
+    this.audio.onloadeddata = () => {
       if (this.option.controls) {
-        startStopButton.setAudio(audio);
-        progressBar.setAudio(audio);
-        volumeBar.setAudio(audio);
+        this.startStopButton.setAudio(this.audio);
+        this.progressBar.setAudio(this.audio);
+        this.volumeBar.setAudio(this.audio);
       }
       if (this.option.canvas) {
-        canvas.setAudio(audio);
-        canvas.visualize();
+        this.canvas.setAudio(this.audio);
+        this.canvas.visualize();
       }
-      audio.onended = () => {
+      this.audio.onended = () => {
         if (this.option.controls) {
-          startStopButton.pause();
+          this.startStopButton.pause();
         }
         if (this.listeners.onEnded) {
           this.listeners.onEnded();
@@ -87,7 +85,7 @@ class Waving implements IWaving {
    * Start the player programmatically
    */
   public start() {
-    audio.play();
+    this.audio.play();
     if (this.listeners.onStart) {
       this.listeners.onStart();
     }
@@ -97,7 +95,7 @@ class Waving implements IWaving {
    * Pause the player programmatically
    */
   public pause() {
-    audio.pause();
+    this.audio.pause();
     if (this.listeners.onPaused) {
       this.listeners.onPaused();
     }
@@ -107,8 +105,8 @@ class Waving implements IWaving {
    * Pause and reset the audio current time programmatically
    */
   public stop() {
-    audio.pause();
-    audio.currentTime = 0;
+    this.audio.pause();
+    this.audio.currentTime = 0;
     if (this.listeners.onStopped) {
       this.listeners.onStopped();
     }
@@ -122,14 +120,14 @@ class Waving implements IWaving {
     if (volume > 100) {
       throw new Error('The volume must be from 0 - 100');
     }
-    audio.volume = Math.floor(volume) / 100;
+    this.audio.volume = Math.floor(volume) / 100;
   }
 
   /**
    * Mute the player
    */
   public mute() {
-    audio.volume = 0;
+    this.audio.volume = 0;
   }
 
   /**
@@ -148,38 +146,54 @@ class Waving implements IWaving {
 
     // if user disable canvas
     if (option.canvas) {
-      canvas = new Canvas(option);
-      this.root.appendChild(canvas.render());
+      this.canvas = new Canvas(option);
+      this.root.appendChild(this.canvas.render());
     }
     // if the user disable default controls then we don't need to create them
     if (option.controls) {
       // initialize controls
-      volumeBar = new VolumeBar(option);
-      volumeBar.onChange(volume => {
+      this.volumeBar = new VolumeBar(option);
+      this.volumeBar.onChange(volume => {
         if (this.listeners.onVolumeChanged) {
           this.listeners.onVolumeChanged(volume);
         }
       });
 
-      progressBar = new ProgressBar(option);
+      this.progressBar = new ProgressBar(option);
 
-      startStopButton = new StartStopButton(option);
-      startStopButton.onStart(() => {
+      this.startStopButton = new StartStopButton(option);
+      this.startStopButton.onStart(() => {
         this.start();
       });
-      startStopButton.onPause(() => {
+      this.startStopButton.onPause(() => {
         this.pause();
       });
       // append all controls into the main control container
       const controlContainer = document.createElement('div');
       controlContainer.className = 'control-container';
 
-      controlContainer.appendChild(progressBar.render());
-      controlContainer.appendChild(volumeBar.render());
-      controlContainer.appendChild(startStopButton.render());
+      controlContainer.appendChild(this.progressBar.render());
+      controlContainer.appendChild(this.volumeBar.render());
+      controlContainer.appendChild(this.startStopButton.render());
       this.root.appendChild(controlContainer);
     }
   }
 }
 
-export default Waving;
+export default class Waving implements IWaving {
+  public start: () => void;
+  public stop: () => void;
+  public pause: () => void;
+  public mute: () => void;
+  public setAudio: (src: string) => void;
+  public setVolume: (volume: number) => void;
+  constructor(el, options, events) {
+    const instance: WavingCore = new WavingCore(el, options, events);
+    this.start = () => instance.start();
+    this.stop = () => instance.stop();
+    this.pause = () => instance.pause();
+    this.setAudio = (src: string) => instance.setAudio(src);
+    this.setVolume = (volume: number) => instance.setVolume(volume);
+    this.mute = () => instance.mute();
+  }
+}
