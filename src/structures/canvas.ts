@@ -1,4 +1,6 @@
+import { classList } from '../common';
+
 export default `
-<canvas class="waving-canvas">
+<canvas class="${classList.canvas.container}">
 </canvas>
 `;

@@ -1,8 +1,10 @@
+import { classList } from '../common';
+const volumeBarClass = classList.volumeBar;
 export default `
-<div class="waving-player__volume-bar">
-  <div class="thumb"></div>
-  <div class="volume-line">
-    <div class="volume-line--selected">
+<div class="${volumeBarClass.container}">
+  <div class="${volumeBarClass.thumb}"></div>
+  <div class="${volumeBarClass.volumeLine}">
+    <div class="${volumeBarClass.volumeSelectedLine}">
   </div>
 </div>
 `;

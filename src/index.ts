@@ -118,8 +118,8 @@ class Waving implements IWaving {
       controlContainer.className = 'control-container';
 
       controlContainer.appendChild(this.progressBar.render());
-      controlContainer.appendChild(this.startStopButton.render());
       controlContainer.appendChild(this.volumeBar.render());
+      controlContainer.appendChild(this.startStopButton.render());
       this.root.appendChild(controlContainer);
     }
   }

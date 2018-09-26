@@ -16,3 +16,24 @@ export interface IWavingEvents {
   onEnded?: () => void;
   onPaused?: () => void;
 }
+
+export const classList = {
+  volumeBar: {
+    container: 'waving-player__volume-bar',
+    thumb: 'thumb',
+    volumeLine: 'volume-line',
+    volumeSelectedLine: 'volume-line--selected'
+  },
+  progressBar: {
+    container: 'waving-player__progress-bar',
+    thumb: 'thumb',
+    progressLine: 'progress-line',
+    porgressPlayedLine: 'progress-line--played'
+  },
+  startStopButton: {
+    container: 'waving-player__start-stop-button'
+  },
+  canvas: {
+    container: 'waving-canvas'
+  }
+};

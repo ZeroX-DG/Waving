@@ -1,6 +1,8 @@
+import { classList } from '../common';
+const startStopButtonClass = classList.startStopButton;
+
 export default `
-<div
-class="waving-player__start-stop-button">
+<div class="${startStopButtonClass.container}">
   <div class="icon icon-play"></div>
 </div>
 `;

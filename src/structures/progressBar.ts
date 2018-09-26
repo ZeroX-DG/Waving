@@ -1,8 +1,10 @@
+import { classList } from '../common';
+const progressBarClass = classList.progressBar;
 export default `
-<div class="waving-player__progress-bar">
-  <div class="thumb"></div>
-  <div class="progress-line">
-    <div class="progress-line--played">
+<div class="${progressBarClass.container}">
+  <div class="${progressBarClass.thumb}"></div>
+  <div class="${progressBarClass.progressLine}">
+    <div class="${progressBarClass.porgressPlayedLine}">
   </div>
 </div>
 `;
