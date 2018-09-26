@@ -15,6 +15,7 @@ export interface IWavingEvents {
   onStart?: () => void;
   onEnded?: () => void;
   onPaused?: () => void;
+  onVolumeChanged?: (volume: number) => void;
 }
 
 export const classList = {

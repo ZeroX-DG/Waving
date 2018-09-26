@@ -6,6 +6,7 @@ import { stringToNode } from '../util';
 export interface IVolumeBar {
   render(): HTMLElement;
   setAudio(audio: HTMLAudioElement);
+  onChange(fn: (volume: number) => void);
 }
 
 export default class VolumeBar implements IVolumeBar {
@@ -16,6 +17,7 @@ export default class VolumeBar implements IVolumeBar {
   private percentage: number;
   private audio: HTMLAudioElement;
   private color: string;
+  private volumeChangeCallback: (volume: number) => void;
 
   constructor(option: IWavingOption) {
     this.percentage = option.volume >= 0 ? option.volume : 50;
@@ -44,6 +46,10 @@ export default class VolumeBar implements IVolumeBar {
     this.trackVolume();
   }
 
+  public onChange(fn: (volume: number) => void) {
+    this.volumeChangeCallback = fn;
+  }
+
   private trackVolume() {
     let isFirstTime = true;
     this.audio.onvolumechange = () => {
@@ -53,6 +59,9 @@ export default class VolumeBar implements IVolumeBar {
       }
       this.percentage = this.audio.volume * 100;
       this.update();
+      if (this.volumeChangeCallback) {
+        this.volumeChangeCallback(this.percentage);
+      }
     };
   }
 
@@ -90,15 +99,19 @@ export default class VolumeBar implements IVolumeBar {
   private onvolumeThumbDrag(e: MouseEvent) {
     const volumeTrackRect = this.volumeBar.getBoundingClientRect();
     const volumnTrackWidth = volumeTrackRect.width;
-    const volumeTrackRight = volumeTrackRect.right;
     const volumeTrackLeft = volumeTrackRect.left;
     const mouseX = e.clientX;
-    if (mouseX <= volumeTrackRight && mouseX >= volumeTrackLeft) {
-      const percentage = ((mouseX - volumeTrackLeft) * 100) / volumnTrackWidth;
-      this.percentage = percentage;
-      this.audio.volume = Math.floor(percentage) / 100;
-      this.update();
+    let percentage = Math.floor(
+      ((mouseX - volumeTrackLeft) * 100) / volumnTrackWidth
+    );
+    if (percentage < 0) {
+      percentage = 0;
+    } else if (percentage > 100) {
+      percentage = 100;
     }
+    this.percentage = percentage;
+    this.audio.volume = percentage / 100;
+    this.update();
   }
 
   private update() {

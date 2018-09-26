@@ -81,18 +81,20 @@ export default class ProgressBar implements IProgressBar {
     e.stopPropagation();
     const progressBarRect = this.progressLine.getBoundingClientRect();
     const progressBarLeft = progressBarRect.left;
-    const progressBarRight = progressBarRect.right;
     const progressBarWidth = this.progressLine.offsetWidth;
     const songDuration = this.duration;
-    if (e.clientX <= progressBarRight && e.clientX >= progressBarLeft) {
-      const playedDuration =
-        ((e.clientX - progressBarLeft) / progressBarWidth) * songDuration;
-      const playedPercentage = (playedDuration * 100) / songDuration;
-      this.percentage = playedPercentage;
-      this.currentDuration = playedDuration;
-      this.audio.currentTime = this.currentDuration;
-      this.update();
+    let playedDuration =
+      ((e.clientX - progressBarLeft) / progressBarWidth) * songDuration;
+    if (playedDuration < 0) {
+      playedDuration = 0;
+    } else if (playedDuration > songDuration) {
+      playedDuration = songDuration;
     }
+    const playedPercentage = (playedDuration * 100) / songDuration;
+    this.percentage = playedPercentage;
+    this.currentDuration = playedDuration;
+    this.audio.currentTime = this.currentDuration;
+    this.update();
   }
 
   private trackProgress() {

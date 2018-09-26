@@ -101,6 +101,11 @@ class Waving implements IWaving {
 
     if (option.controls) {
       this.volumeBar = new VolumeBar(option);
+      this.volumeBar.onChange(volume => {
+        if (this.listeners.onVolumeChanged) {
+          this.listeners.onVolumeChanged(volume);
+        }
+      });
       this.progressBar = new ProgressBar(option);
 
       this.startStopButton = new StartStopButton(option);
