@@ -24,6 +24,9 @@ export default class VolumeBar implements IVolumeBar {
     this.color = option.controlsColor;
   }
 
+  /**
+   * @return {HTMLElement} volume bar after created from string
+   */
   public render(): HTMLElement {
     this.volumeBar = stringToNode(volumeBarStructure);
     this.thumb = this.volumeBar.querySelector('.thumb');
@@ -39,6 +42,10 @@ export default class VolumeBar implements IVolumeBar {
     return this.volumeBar;
   }
 
+  /**
+   * Set the audio element to interact
+   * @param audio Audio element to interact
+   */
   public setAudio(audio: HTMLAudioElement) {
     this.audio = audio;
     this.audio.volume = Math.floor(this.percentage) / 100;
@@ -46,10 +53,17 @@ export default class VolumeBar implements IVolumeBar {
     this.trackVolume();
   }
 
+  /**
+   * Set the callback for tracking when the volume is changed
+   * @param fn Callback when the volume is changed
+   */
   public onChange(fn: (volume: number) => void) {
     this.volumeChangeCallback = fn;
   }
 
+  /**
+   * Track the audio volume to update the UI accordingly
+   */
   private trackVolume() {
     let isFirstTime = true;
     this.audio.onvolumechange = () => {
@@ -65,6 +79,9 @@ export default class VolumeBar implements IVolumeBar {
     };
   }
 
+  /**
+   * Update the UI if the controls option is set to true
+   */
   private initInterface() {
     if (this.color) {
       this.volumeLineSelected.style.background = this.color;
@@ -72,6 +89,9 @@ export default class VolumeBar implements IVolumeBar {
     }
   }
 
+  /**
+   * Handle mouse event on the volume bar
+   */
   private initMouseEvent() {
     const self = this;
     this.thumb.addEventListener('mousedown', ev => {
@@ -96,6 +116,10 @@ export default class VolumeBar implements IVolumeBar {
     });
   }
 
+  /**
+   * Handle draging the thumb or clicking on the volume bar
+   * @param e mouse event when user click or drag on the volume bar
+   */
   private onvolumeThumbDrag(e: MouseEvent) {
     const volumeTrackRect = this.volumeBar.getBoundingClientRect();
     const volumnTrackWidth = volumeTrackRect.width;
@@ -114,6 +138,9 @@ export default class VolumeBar implements IVolumeBar {
     this.update();
   }
 
+  /**
+   * Update UI of the volume bar
+   */
   private update() {
     if (!this.audio) {
       return;

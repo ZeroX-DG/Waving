@@ -42,7 +42,17 @@ class Waving implements IWaving {
     this.init(this.option);
   }
 
+  /**
+   * Set audio file for player
+   * @param src The address to the audio file
+   */
   public setAudio(src: string) {
+    if (typeof src !== 'string') {
+      throw new Error(
+        'The audio source must a string containing the address to the audio'
+      );
+    }
+
     audio = audio || document.createElement('audio');
     this.stop();
     audio.src = src;
@@ -68,6 +78,9 @@ class Waving implements IWaving {
     };
   }
 
+  /**
+   * Start the player programmatically
+   */
   public start() {
     audio.play();
     if (this.listeners.onStart) {
@@ -75,6 +88,9 @@ class Waving implements IWaving {
     }
   }
 
+  /**
+   * Pause the player programmatically
+   */
   public pause() {
     audio.pause();
     if (this.listeners.onPaused) {
@@ -82,6 +98,9 @@ class Waving implements IWaving {
     }
   }
 
+  /**
+   * Pause and reset the audio current time programmatically
+   */
   public stop() {
     audio.pause();
     audio.currentTime = 0;
@@ -90,6 +109,10 @@ class Waving implements IWaving {
     }
   }
 
+  /**
+   * Set volume for player
+   * @param volume percentage of volume (0 - 100)
+   */
   public setVolume(volume: number) {
     if (volume > 100) {
       throw new Error('The volume must be from 0 - 100');
@@ -97,25 +120,37 @@ class Waving implements IWaving {
     audio.volume = Math.floor(volume) / 100;
   }
 
+  /**
+   * Mute the player
+   */
   public mute() {
     audio.volume = 0;
   }
 
+  /**
+   * Initialize controls and containers
+   * @param option Options passed by the user
+   */
   private init(option: IWavingOption) {
     this.root.classList.add('waving-container');
+    // if the user set the option controls: false
     if (!this.option.controls) {
       this.root.classList.add('no-controls');
     }
 
     canvas = new Canvas(option);
 
+    this.root.appendChild(canvas.render());
+    // if the user disable default controls then we don't need to create them
     if (option.controls) {
+      // initialize controls
       volumeBar = new VolumeBar(option);
       volumeBar.onChange(volume => {
         if (this.listeners.onVolumeChanged) {
           this.listeners.onVolumeChanged(volume);
         }
       });
+
       progressBar = new ProgressBar(option);
 
       startStopButton = new StartStopButton(option);
@@ -125,10 +160,7 @@ class Waving implements IWaving {
       startStopButton.onPause(() => {
         this.pause();
       });
-    }
-
-    this.root.appendChild(canvas.render());
-    if (option.controls) {
+      // append all controls into the main control container
       const controlContainer = document.createElement('div');
       controlContainer.className = 'control-container';
 

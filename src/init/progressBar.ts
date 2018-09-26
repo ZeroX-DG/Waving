@@ -23,6 +23,9 @@ export default class ProgressBar implements IProgressBar {
     this.color = option.controlsColor;
   }
 
+  /**
+   * @return {HTMLElement} progress bar after created from string
+   */
   public render(): HTMLElement {
     this.progressBar = stringToNode(progressBarStructure);
     this.thumb = this.progressBar.querySelector('.thumb');
@@ -37,6 +40,10 @@ export default class ProgressBar implements IProgressBar {
     return this.progressBar;
   }
 
+  /**
+   * Set the audio element to interact
+   * @param audio Audio element to interact
+   */
   public setAudio(audio: HTMLAudioElement) {
     this.audio = audio;
     this.duration = this.audio.duration;
@@ -46,6 +53,9 @@ export default class ProgressBar implements IProgressBar {
     this.trackProgress();
   }
 
+  /**
+   * Update interface for progress bar if controls set to true
+   */
   private initInterface() {
     if (this.color) {
       this.progressPlayedLine.style.background = this.color;
@@ -53,6 +63,9 @@ export default class ProgressBar implements IProgressBar {
     }
   }
 
+  /**
+   * Handle mouse event on the progress bar
+   */
   private initMouseEvent() {
     const self = this;
     this.thumb.addEventListener('mousedown', ev => {
@@ -77,6 +90,10 @@ export default class ProgressBar implements IProgressBar {
     });
   }
 
+  /**
+   * Handle draging the thumb or clicking on the progress bar
+   * @param e mouse event when user click or drag on the progress bar
+   */
   private onProgressBarThumbDrag(e) {
     e.stopPropagation();
     const progressBarRect = this.progressLine.getBoundingClientRect();
@@ -97,6 +114,9 @@ export default class ProgressBar implements IProgressBar {
     this.update();
   }
 
+  /**
+   * Track the progress of the audio and update the progress bar accordingly
+   */
   private trackProgress() {
     if (!this.audio) {
       return;
@@ -108,6 +128,9 @@ export default class ProgressBar implements IProgressBar {
     };
   }
 
+  /**
+   * Update UI of the progress bar
+   */
   private update() {
     if (!this.audio) {
       return;

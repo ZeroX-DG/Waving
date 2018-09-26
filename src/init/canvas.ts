@@ -22,12 +22,19 @@ export default class Canvas implements ICanvas {
     this.visualCanvasColor = option.visualCanvasColor;
   }
 
+  /**
+   * @return {HTMLElement} canvas after created from string
+   */
   public render(): HTMLElement {
     this.canvas = stringToNode(canvasStructure) as HTMLCanvasElement;
     return this.canvas as HTMLElement;
   }
 
-  public setAudio(audio) {
+  /**
+   * Set the audio element to interact
+   * @param audio audio element to interact
+   */
+  public setAudio(audio: HTMLAudioElement) {
     // only use 1 audio context
     this.audioContext = this.audioContext || new AudioContext();
     // remember the sources
@@ -42,6 +49,9 @@ export default class Canvas implements ICanvas {
     this.analyser.connect(this.audioContext.destination);
   }
 
+  /**
+   * Start the visualization of the audio
+   */
   public visualize() {
     const ctx = this.canvas.getContext('2d');
     const drawBars = () => {
@@ -52,7 +62,7 @@ export default class Canvas implements ICanvas {
         this.analyser.frequencyBinCount
       );
       this.analyser.getByteFrequencyData(frequencyBinCounts);
-      // clear this.canvass for re-draw
+      // clear this.canvas for re-draw
       ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
       const gradient = ctx.createLinearGradient(0, 0, 0, this.canvas.height);
       if (this.visualCanvasColor) {
@@ -60,6 +70,7 @@ export default class Canvas implements ICanvas {
           gradient.addColorStop(color.stop, color.color);
         }
       } else {
+        // default gradient color
         gradient.addColorStop(0, '#EA2027');
         gradient.addColorStop(0.8, '#ff8c8c');
         gradient.addColorStop(1, '#ffefef');
