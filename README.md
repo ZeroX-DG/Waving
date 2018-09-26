@@ -22,7 +22,7 @@ To getting started with Waving, the only thing you need to do is to pass in a co
 
 <!-- Initialize Waving and set audio -->
 <script>
-const container = document.getElementById('#player');
+const container = document.getElementById('player');
 const player = new Waving(container);
 player.setAudio('audio.mp3');
 </script>
