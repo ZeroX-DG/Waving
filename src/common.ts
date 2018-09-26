@@ -14,6 +14,7 @@ export interface IWavingOption {
 export interface IWavingEvents {
   onStart?: () => void;
   onEnded?: () => void;
+  onStopped?: () => void;
   onPaused?: () => void;
   onVolumeChanged?: (volume: number) => void;
 }

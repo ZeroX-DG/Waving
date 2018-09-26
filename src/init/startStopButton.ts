@@ -7,9 +7,9 @@ export interface IStartStopButton {
   render(): HTMLElement;
   setAudio(audio: HTMLAudioElement);
   onStart(callback: () => void);
-  onStop(callback: () => void);
+  onPause(callback: () => void);
   start();
-  stop();
+  pause();
 }
 
 export default class StartStopButton implements IStartStopButton {
@@ -19,7 +19,7 @@ export default class StartStopButton implements IStartStopButton {
   private color: string;
   private audio: HTMLAudioElement;
   private startCallback: () => void;
-  private stopCallback: () => void;
+  private pauseCallback: () => void;
 
   constructor(option: IWavingOption) {
     this.color = option.controlsColor;
@@ -31,7 +31,7 @@ export default class StartStopButton implements IStartStopButton {
     this.initInterface();
     this.button.addEventListener('click', () => {
       if (this.isPlaying) {
-        this.stop();
+        this.pause();
       } else {
         this.start();
       }
@@ -51,7 +51,7 @@ export default class StartStopButton implements IStartStopButton {
         isFirstTime = false;
         return;
       }
-      this.stop();
+      this.pause();
     };
 
     this.audio.onplay = () => {
@@ -63,8 +63,8 @@ export default class StartStopButton implements IStartStopButton {
     };
   }
 
-  public stop() {
-    this.stopCallback();
+  public pause() {
+    this.pauseCallback();
     this.isPlaying = false;
     this.icon.className = 'icon icon-play';
   }
@@ -79,8 +79,8 @@ export default class StartStopButton implements IStartStopButton {
     this.startCallback = callback;
   }
 
-  public onStop(callback: () => void) {
-    this.stopCallback = callback;
+  public onPause(callback: () => void) {
+    this.pauseCallback = callback;
   }
 
   private initInterface() {

@@ -9,6 +9,7 @@ import './styles/container.sass';
 interface IWaving {
   setAudio(audio: string);
   start();
+  pause();
   stop();
   setVolume(volume: number);
   mute();
@@ -55,7 +56,7 @@ class Waving implements IWaving {
       canvas.visualize();
       audio.onended = () => {
         if (this.option.controls) {
-          startStopButton.stop();
+          startStopButton.pause();
         }
         if (this.listeners.onEnded) {
           this.listeners.onEnded();
@@ -74,10 +75,18 @@ class Waving implements IWaving {
     }
   }
 
-  public stop() {
+  public pause() {
     audio.pause();
     if (this.listeners.onPaused) {
       this.listeners.onPaused();
+    }
+  }
+
+  public stop() {
+    audio.pause();
+    audio.currentTime = 0;
+    if (this.listeners.onStopped) {
+      this.listeners.onStopped();
     }
   }
 
@@ -113,8 +122,8 @@ class Waving implements IWaving {
       startStopButton.onStart(() => {
         this.start();
       });
-      startStopButton.onStop(() => {
-        this.stop();
+      startStopButton.onPause(() => {
+        this.pause();
       });
     }
 

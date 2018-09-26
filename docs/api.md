@@ -10,6 +10,7 @@
     - [new waving(element, options, events)](#new-wavingelement-options-events)
     - [Waving.setAudio(audio)](#wavingsetaudioaudio)
     - [Waving.start()](#wavingstart)
+    - [Waving.pause()](#wavingpause)
     - [Waving.stop()](#wavingstop)
     - [Waving.setVolume(percentage)](#wavingsetvolumepercentage)
     - [Waving.mute()](#wavingmute)
@@ -49,6 +50,7 @@ player.mute();
   - `onStart` <[function]> Callback that executes everytime the audio file is played
   - `onPause` <[function]> Cabllack that executes everytime the aduio file is paused
   - `onEnded` <[function]> Callback that executes everytime the audio file is ended
+  - `onStopped` <[function]> Callback that executes everytime the audio file is stopped
 
 #### Waving.setAudio(audio)
 
@@ -58,9 +60,13 @@ player.mute();
 
 Start/resume the audio file
 
+#### Waving.pause()
+
+Pause the audio file
+
 #### Waving.stop()
 
-pause the audio file
+Stop and reset the audio file
 
 #### Waving.setVolume(percentage)
 
@@ -69,3 +75,11 @@ pause the audio file
 #### Waving.mute()
 
 Mute the volume of the audio file.
+
+[string]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String
+[number]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number
+[object]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object
+[htmlelement]: https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement
+[function]: https://developer.mozilla.org/en-US/docs/Glossary/Function
+[boolean]: https://developer.mozilla.org/en-US/docs/Glossary/Boolean
+[array]: https://developer.mozilla.org/en-US/docs/Glossary/array
