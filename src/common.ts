@@ -9,6 +9,7 @@ export interface IWavingOption {
   visualCanvasColor?: IVisualCanvasColor[];
   autoStart?: boolean;
   controls?: boolean;
+  canvas?: boolean;
 }
 
 export interface IWavingEvents {

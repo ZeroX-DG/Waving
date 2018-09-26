@@ -1,4 +1,4 @@
-import { IWavingOption, IWavingEvents } from './common';
+import { IWavingOption, IWavingEvents, classList } from './common';
 import './icons/style.css';
 import Canvas, { ICanvas } from './init/canvas';
 import ProgressBar, { IProgressBar } from './init/progressBar';
@@ -35,9 +35,12 @@ class Waving implements IWaving {
     this.option = option || {};
     this.listeners = events || {};
 
-    // default to show controls
+    // default to show controls and canvas
     if (this.option.controls === undefined) {
       this.option.controls = true;
+    }
+    if (this.option.canvas === undefined) {
+      this.option.canvas = true;
     }
     this.init(this.option);
   }
@@ -62,8 +65,10 @@ class Waving implements IWaving {
         progressBar.setAudio(audio);
         volumeBar.setAudio(audio);
       }
-      canvas.setAudio(audio);
-      canvas.visualize();
+      if (this.option.canvas) {
+        canvas.setAudio(audio);
+        canvas.visualize();
+      }
       audio.onended = () => {
         if (this.option.controls) {
           startStopButton.pause();
@@ -137,10 +142,15 @@ class Waving implements IWaving {
     if (!this.option.controls) {
       this.root.classList.add('no-controls');
     }
+    if (!this.option.canvas) {
+      this.root.classList.add('no-canvas');
+    }
 
-    canvas = new Canvas(option);
-
-    this.root.appendChild(canvas.render());
+    // if user disable canvas
+    if (option.canvas) {
+      canvas = new Canvas(option);
+      this.root.appendChild(canvas.render());
+    }
     // if the user disable default controls then we don't need to create them
     if (option.controls) {
       // initialize controls

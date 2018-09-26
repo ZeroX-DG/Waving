@@ -2,7 +2,7 @@
   "name": "waving",
   "version": "1.0.0",
   "description": "A simple audio player with wave",
-  "main": "dist/index.js",
+  "main": "dist/waving.js",
   "scripts": {
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
     "dev": "rollup -c -w",
