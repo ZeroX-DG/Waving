@@ -2,6 +2,10 @@
 
 _A simple audio player with wave effect_
 
+<p align="center">
+  <img src="./assets/demo.gif" />
+</p>
+
 ## Quick start
 
 To getting started with Waving, the only thing you need to do is to pass in a container `div` for Waving to put the player there.
