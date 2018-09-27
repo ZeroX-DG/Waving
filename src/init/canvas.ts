@@ -16,6 +16,7 @@ export default class Canvas implements ICanvas {
   private source: MediaElementAudioSourceNode;
   private analyser: AnalyserNode;
   private visualCanvasColor: IVisualCanvasColor[];
+  private animation: any;
 
   constructor(option: IWavingOption) {
     this.mediaElements = new WeakMap();
@@ -55,7 +56,8 @@ export default class Canvas implements ICanvas {
   public visualize() {
     const ctx = this.canvas.getContext('2d');
     const drawBars = () => {
-      window.requestAnimationFrame(drawBars);
+      window.cancelAnimationFrame(this.animation);
+      this.animation = window.requestAnimationFrame(drawBars);
       this.canvas.width = this.canvas.offsetWidth;
       this.canvas.height = this.canvas.offsetHeight;
       const frequencyBinCounts = new Uint8Array(
