@@ -7,12 +7,12 @@ import VolumeBar, { IVolumeBar } from './init/volumeBar';
 import './styles/container.sass';
 
 interface IWaving {
-  setAudio(audio: string);
-  start();
-  pause();
-  stop();
-  setVolume(volume: number);
-  mute();
+  setAudio(audio: string): void;
+  start(): void;
+  pause(): void;
+  stop(): void;
+  setVolume(volume: number): void;
+  mute(): void;
 }
 
 class WavingCore {
@@ -57,6 +57,7 @@ class WavingCore {
 
     this.audio = this.audio || document.createElement('audio');
     this.audio.src = src;
+    this.audio.crossOrigin = 'anonymous';
     this.audio.onloadeddata = () => {
       if (this.option.controls) {
         this.startStopButton.setAudio(this.audio);
