@@ -1,6 +1,6 @@
 {
   "name": "waving",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A simple audio player with wave",
   "main": "dist/waving.js",
   "scripts": {
