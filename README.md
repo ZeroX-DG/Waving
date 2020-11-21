@@ -12,13 +12,13 @@ To getting started with Waving, the only thing you need to do is to pass in a co
 
 ```html
 <!-- Include Waving stylesheet -->
-<link href="https://unpkg.com/waving@1.0.0/dist/waving.css" rel="stylesheet">
+<link href="https://unpkg.com/waving@1.1.1/dist/waving.css" rel="stylesheet">
 
 <!-- Create the player container -->
 <div id="player"></div>
 
 <!-- Include the Waving library -->
-<script src="https://unpkg.com/waving@1.0.0/dist/waving.js"></script>
+<script src="https://unpkg.com/waving@1.1.1/dist/waving.js"></script>
 
 <!-- Initialize Waving and set audio -->
 <script>
