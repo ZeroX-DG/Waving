@@ -199,6 +199,7 @@ export default class Waving implements IWaving {
   public mute: () => void;
   public setAudio: (src: string) => void;
   public setVolume: (volume: number) => void;
+  public setCrossOrigin: (crossOrigin: string) => void;
   constructor(el, options?, events?) {
     const instance: WavingCore = new WavingCore(el, options, events);
     this.start = () => instance.start();
@@ -206,6 +207,8 @@ export default class Waving implements IWaving {
     this.pause = () => instance.pause();
     this.setAudio = (src: string) => instance.setAudio(src);
     this.setVolume = (volume: number) => instance.setVolume(volume);
+    this.setCrossOrigin = (crossOrigin: string) =>
+      instance.setCrossOrigin(crossOrigin);
     this.mute = () => instance.mute();
   }
 }
