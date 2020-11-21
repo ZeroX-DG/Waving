@@ -39,6 +39,7 @@ player.mute();
 
 - `element` <[HTMLElement]> Element for Waving to place the player in.
 - `options` <[Object]>
+  - `crossOrigin` <[string]> Specify the crossOrigin for the audio
   - `controlsColor` <[string]> Color of the player default controls (requires controls: true)
   - `controls` <[boolean]> Indicates that the player should display the default controls
   - `autoStart` <[boolean]> Indicates that the player should play automatically on loaded new audio

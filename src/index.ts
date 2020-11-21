@@ -1,4 +1,4 @@
-import { IWavingOption, IWavingEvents, classList } from './common';
+import { IWavingOption, IWavingEvents } from './common';
 import './icons/style.css';
 import Canvas, { ICanvas } from './init/canvas';
 import ProgressBar, { IProgressBar } from './init/progressBar';
@@ -57,7 +57,7 @@ class WavingCore {
 
     this.audio = this.audio || document.createElement('audio');
     this.audio.src = src;
-    this.audio.crossOrigin = 'anonymous';
+    this.audio.crossOrigin = this.option.crossOrigin;
     this.audio.onloadeddata = () => {
       if (this.option.controls) {
         this.startStopButton.setAudio(this.audio);
@@ -188,7 +188,7 @@ export default class Waving implements IWaving {
   public mute: () => void;
   public setAudio: (src: string) => void;
   public setVolume: (volume: number) => void;
-  constructor(el, options, events) {
+  constructor(el, options?, events?) {
     const instance: WavingCore = new WavingCore(el, options, events);
     this.start = () => instance.start();
     this.stop = () => instance.stop();
