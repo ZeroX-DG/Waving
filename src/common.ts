@@ -4,6 +4,7 @@ export interface IVisualCanvasColor {
 }
 
 export interface IWavingOption {
+  crossOrigin?: string;
   controlsColor?: string;
   volume?: number;
   visualCanvasColor?: IVisualCanvasColor[];

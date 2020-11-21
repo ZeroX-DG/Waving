@@ -14,6 +14,7 @@
     - [Waving.stop()](#wavingstop)
     - [Waving.setVolume(percentage)](#wavingsetvolumepercentage)
     - [Waving.mute()](#wavingmute)
+    - [Waving.setCrossOrigin(crossOrigin)](#wavingsetcrossorigincrossorigin)
 
 <!-- /TOC -->
 
@@ -39,6 +40,7 @@ player.mute();
 
 - `element` <[HTMLElement]> Element for Waving to place the player in.
 - `options` <[Object]>
+  - `crossOrigin` <[string]> Specify the crossOrigin for the audio
   - `controlsColor` <[string]> Color of the player default controls (requires controls: true)
   - `controls` <[boolean]> Indicates that the player should display the default controls
   - `autoStart` <[boolean]> Indicates that the player should play automatically on loaded new audio
@@ -75,6 +77,10 @@ Stop and reset the audio file
 #### Waving.mute()
 
 Mute the volume of the audio file.
+
+#### Waving.setCrossOrigin(crossOrigin)
+
+- `crossOrigin` <[string]> the crossOrigin for the audio source
 
 [string]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String
 [number]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number
