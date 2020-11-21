@@ -132,6 +132,17 @@ class WavingCore {
   }
 
   /**
+   * Set the audio crossOrigin
+   * @param crossOrigin the crossOrigin to set for the audio
+   */
+  public setCrossOrigin(crossOrigin: string) {
+    if (typeof crossOrigin !== 'string') {
+      throw new Error('The crossOrigin must be a string');
+    }
+    this.audio.crossOrigin = crossOrigin;
+  }
+
+  /**
    * Initialize controls and containers
    * @param option Options passed by the user
    */

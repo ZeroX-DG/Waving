@@ -14,6 +14,7 @@
     - [Waving.stop()](#wavingstop)
     - [Waving.setVolume(percentage)](#wavingsetvolumepercentage)
     - [Waving.mute()](#wavingmute)
+    - [Waving.setCrossOrigin(crossOrigin)](#wavingsetcrossorigincrossorigin)
 
 <!-- /TOC -->
 
@@ -76,6 +77,10 @@ Stop and reset the audio file
 #### Waving.mute()
 
 Mute the volume of the audio file.
+
+#### Waving.setCrossOrigin(crossOrigin)
+
+- `crossOrigin` <[string]> the crossOrigin for the audio source
 
 [string]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String
 [number]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number
